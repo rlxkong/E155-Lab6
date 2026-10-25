@@ -1,14 +1,20 @@
 // STM32L432KC_SPI.h
-// TODO: <YOUR NAME>
-// TODO: <YOUR EMAIL>
-// TODO: <DATE>
-// TODO: <SHORT DESCRIPTION OF WHAT THIS FILE DOES>
+// Rebecca Kong
+// rkong@g.hmc.edu
+// 10/22/2026
+// Header for SPI functions
 
 #ifndef STM32L4_SPI_H
 #define STM32L4_SPI_H
 
 #include <stdint.h>
 #include <stm32l432xx.h>
+
+// SPI pin definitions
+// STM32L432KC Datasheet Table 14
+#define MOSI_PIN PB5
+#define MISO_PIN PB4
+#define SCK_PIN PB3
 
 ///////////////////////////////////////////////////////////////////////////////
 // Function prototypes
