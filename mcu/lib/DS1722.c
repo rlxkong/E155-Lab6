@@ -35,7 +35,7 @@ void writeDS1722(char data){
 
     // write address for configuration
     spiSendReceive(0x80);
-    // write value being send 
+    // read the data value 
     spiSendReceive(data);
 
     //chip select low
@@ -44,5 +44,40 @@ void writeDS1722(char data){
 
 // Read data from DS1722
 float readDS1722(void){
-    return 
+    // read the fraction part of the temeperature (LSB)
+    // chip select high
+    digitalWrite(CS_PIN, PIO_HIGH);
+
+    // write address for configuration LSB
+    spiSendReceive(0x01);
+    // read the data value
+    int temp_lsb = spiSendReceive(0x00);
+
+    // chip select low
+    digitalWrite(CS_PIN, PIO_LOW);
+
+
+    // read the whole number part of the temeperature (MSB)
+    // chip select high
+    digitalWrite(CS_PIN, PIO_HIGH);
+
+    // write address for LSB
+    spiSendReceive(0x02);
+    // read data value
+    int temp_msb = spiSendReceive(0x00);
+
+    // chip select low
+    digitalWrite(CS_PIN, PIO_LOW);
+
+    // logic to determine positive or negative temperature (due to it being in twos-complement)
+    // sets it to negative when the first bit is 1 
+    if(temp_lsb >= 128){
+        temp_msb -= 256;
+    }
+
+    // combining integer and fraction portions of the temperature into one value
+    // divide temp_lsb by 256 (float) to ensure that it is the actual decimal value (in bits it is just the integer)
+    float temp = temp_msb + (temp_lsb / 256.0f)
+
+    return temp
 }
