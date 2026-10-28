@@ -5,6 +5,7 @@
 // DS1722 functions
 
 #include "STM32L432KC.h"
+#include "DS1722.h"
 #include "STM32L432KC_GPIO.h"
 
 // Initialize DS1722

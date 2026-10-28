@@ -5,6 +5,7 @@
 // SPI Functions
 
 #include "STM32L432KC.h"
+#include "STM32L432KC_SPI.h"
 #include "STM32L432KC_GPIO.h"
 
 /* Enables the SPI peripheral and intializes its clock speed (baud rate), polarity, and phase.
