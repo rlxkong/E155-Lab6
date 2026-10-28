@@ -16,7 +16,7 @@
  * Refer to the datasheet for more low-level details. */ 
 void initSPI(int br, int cpol, int cpha){
     // Turn off SPI1_CR1 to set configurations 
-    SPI1->CR1 &= ~SPI_CR1_SPE;
+    SPI1->CR1 &= 0b0;
 
     // Configure clock tree
     RCC->APB2ENR |= RCC_APB2ENR_SPI1EN;
@@ -41,7 +41,7 @@ void initSPI(int br, int cpol, int cpha){
     SPI1->CR1 |= _VAL2FLD(SPI_CR1_CPHA, cpha);
 
     // Configure master mode
-    SPI1->CR1 |= SPI_CR1_MSTR;
+    SPI1->CR1 |= _VAL2FLD(SPI_CR1_MSTR, 1);
 
     // Write to SPI_CR2 register
     // Turn off SPI1_CR2 to set configurations 
@@ -51,13 +51,13 @@ void initSPI(int br, int cpol, int cpha){
     SPI1->CR2 |= _VAL2FLD(SPI_CR2_DS, 0b0111);
 
     // Configure SSOE
-    SPI1->CR2 |= SPI_CR2_SSOE;
+    SPI1->CR2 |= _VAL2FLD(SPI_CR2_SSOE, 1);
 
     // Configure FRXTH bit (based on DS->DR which is 8-bit)
-    SPI1->CR2 |= SPI_CR2_FRXTH;
+    SPI1->CR2 |= _VAL2FLD(SPI_CR2_FRXTH, 1);
 
     // Enable SPI
-    SPI1->CR1 |= SPI_CR1_SPE;
+    SPI1->CR1 |= _VAL2FLD(SPI_CR1_SPE, 1);
 }
 
 /* Transmits a character (1 byte) over SPI and returns the received character.

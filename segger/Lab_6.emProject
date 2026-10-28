@@ -42,6 +42,7 @@
       macros="DeviceHeaderFile=$(PackagesDir)/STM32L4xx/Device/Include/stm32l4xx.h;DeviceSystemFile=$(PackagesDir)/STM32L4xx/Device/Source/system_stm32l4xx.c;DeviceVectorsFile=$(PackagesDir)/STM32L4xx/Source/stm32l432xx_Vectors.s;DeviceFamily=STM32L4xx;DeviceSubFamily=STM32L432;Target=STM32L432KCUx"
       project_directory=""
       project_type="Executable" />
+    <configuration Name="Debug" arm_target_interface_type="SWD" />
     <folder Name="CMSIS Files">
       <file file_name="STM32L4xx/Device/Include/stm32l4xx.h" />
       <file file_name="STM32L4xx/Device/Source/system_stm32l4xx.c">
@@ -58,6 +59,11 @@
     </folder>
     <folder Name="Source Files">
       <configuration Name="Common" filter="c;cpp;cxx;cc;h;s;asm;inc" />
+      <folder Name="ESP8266-IoT-webserver">
+        <file file_name=".gitignore" />
+        <file file_name="platformio.ini" />
+        <file file_name="README.md" />
+      </folder>
       <folder Name="lib">
         <file file_name="DS1722.c" />
         <file file_name="DS1722.h" />
