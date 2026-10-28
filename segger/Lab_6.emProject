@@ -43,7 +43,12 @@
       macros="DeviceHeaderFile=$(PackagesDir)/STM32L4xx/Device/Include/stm32l4xx.h;DeviceSystemFile=$(PackagesDir)/STM32L4xx/Device/Source/system_stm32l4xx.c;DeviceVectorsFile=$(PackagesDir)/STM32L4xx/Source/stm32l432xx_Vectors.s;DeviceFamily=STM32L4xx;DeviceSubFamily=STM32L432;Target=STM32L432KCUx"
       project_directory=""
       project_type="Executable" />
-    <configuration Name="Debug" arm_target_interface_type="SWD" />
+    <configuration
+      Name="Debug"
+      arm_target_interface_type="SWD"
+      linker_printf_fp_enabled="Float"
+      linker_printf_width_precision_supported="Yes"
+      linker_scanf_fp_enabled="Yes" />
     <folder Name="CMSIS Files">
       <file file_name="STM32L4xx/Device/Include/stm32l4xx.h" />
       <file file_name="STM32L4xx/Device/Source/system_stm32l4xx.c">

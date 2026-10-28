@@ -111,7 +111,6 @@ int main(void) {
   // Initalize buffers for text to be written into
   char resStr[20];
   char tempStr[20]; 
-  char requestStr[20];
 
   while(1) {
     /* Wait for ESP8266 to send a request.
@@ -138,6 +137,8 @@ int main(void) {
       resConfig = newConfig;
       // set the DS1722 configuration from user input from MCU
       writeDS1722(resConfig);
+      delay_millis(TIM15, 100);
+      sendString(USART, " ");
     }
 
     // read the temperature from DS1722
@@ -147,9 +148,8 @@ int main(void) {
     int led_status = updateLEDStatus(request);
 
     // convert temperature and configuration into string to print
-    sprintf(tempStr, "%f C", temp);
+    sprintf(tempStr, "%.4f C", temp);
     sprintf(resStr, "Resolution: 0x%02X", (unsigned char)resConfig);
-    sprintf(requestStr, "Request: %s", request);
 
     char ledStatusStr[20];
     if (led_status == 1)
