@@ -16,7 +16,7 @@
  * Refer to the datasheet for more low-level details. */ 
 void initSPI(int br, int cpol, int cpha){
     // Turn off SPI1_CR1 to set configurations 
-    SPI1->CR1 &= 0b0;
+    SPI1->CR1 &= 0;
 
     // Configure clock tree
     RCC->APB2ENR |= RCC_APB2ENR_SPI1EN;
@@ -28,12 +28,14 @@ void initSPI(int br, int cpol, int cpha){
     pinMode(SCK_PIN, GPIO_ALT);
 
     // Write proper GPIO registers
-    GPIOB->AFR[0] &= ~GPIO_AFRL_AFSEL7;
-    GPIOB->AFR[0] &= ~GPIO_AFRL_AFSEL6;
+    // From STM32 datasheet table 15
     GPIOB->AFR[0] &= ~GPIO_AFRL_AFSEL5;
-    GPIOB->AFR[0] |= _VAL2FLD(GPIO_AFRL_AFSEL7, 0b0101);
-    GPIOB->AFR[0] |= _VAL2FLD(GPIO_AFRL_AFSEL6, 0b0101);
+    GPIOB->AFR[0] &= ~GPIO_AFRL_AFSEL4;
+    GPIOB->AFR[0] &= ~GPIO_AFRL_AFSEL3;
+    // Set to alternate function 5
     GPIOB->AFR[0] |= _VAL2FLD(GPIO_AFRL_AFSEL5, 0b0101);
+    GPIOB->AFR[0] |= _VAL2FLD(GPIO_AFRL_AFSEL4, 0b0101);
+    GPIOB->AFR[0] |= _VAL2FLD(GPIO_AFRL_AFSEL3, 0b0101);
 
     // Set SPI parameters
     SPI1->CR1 |= _VAL2FLD(SPI_CR1_BR, br);
@@ -45,7 +47,7 @@ void initSPI(int br, int cpol, int cpha){
 
     // Write to SPI_CR2 register
     // Turn off SPI1_CR2 to set configurations 
-    SPI1->CR2 &= 0b0;
+    SPI1->CR2 &= 0;
 
     // Configure the DS[3:0] to select data length for transfer
     SPI1->CR2 |= _VAL2FLD(SPI_CR2_DS, 0b0111);
