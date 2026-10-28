@@ -16,7 +16,7 @@
  * Refer to the datasheet for more low-level details. */ 
 void initSPI(int br, int cpol, int cpha){
     // Turn off SPI1_CR1 to set configurations 
-    SPI1->CR1 &= ~SPI_CR1_SPE;
+    SPI1->CR1 &= 0b0;
 
     // Configure clock tree
     RCC->APB2ENR |= RCC_APB2ENR_SPI1EN;
@@ -28,12 +28,12 @@ void initSPI(int br, int cpol, int cpha){
     pinMode(SCK_PIN, GPIO_ALT);
 
     // Write proper GPIO registers
-    GPIOA->AF[0] &= ~GPIOA_AFRL_AFSEL7;
-    GPIOA->AF[0] &= ~GPIOA_AFRL_AFSEL6;
-    GPIOA->AF[0] &= ~GPIOA_AFRL_AFSEL5;
-    GPIOA->AF[0] |= _VAL2FLD(GPIOA_AFRL_AFSEL7, 0b0101);
-    GPIOA->AF[0] |= _VAL2FLD(GPIOA_AFRL_AFSEL6, 0b0101);
-    GPIOA->AF[0] |= _VAL2FLD(GPIOA_AFRL_AFSEL5, 0b0101);
+    GPIOB->AFR[0] &= ~GPIO_AFRL_AFSEL7;
+    GPIOB->AFR[0] &= ~GPIO_AFRL_AFSEL6;
+    GPIOB->AFR[0] &= ~GPIO_AFRL_AFSEL5;
+    GPIOB->AFR[0] |= _VAL2FLD(GPIO_AFRL_AFSEL7, 0b0101);
+    GPIOB->AFR[0] |= _VAL2FLD(GPIO_AFRL_AFSEL6, 0b0101);
+    GPIOB->AFR[0] |= _VAL2FLD(GPIO_AFRL_AFSEL5, 0b0101);
 
     // Set SPI parameters
     SPI1->CR1 |= _VAL2FLD(SPI_CR1_BR, br);
@@ -41,23 +41,23 @@ void initSPI(int br, int cpol, int cpha){
     SPI1->CR1 |= _VAL2FLD(SPI_CR1_CPHA, cpha);
 
     // Configure master mode
-    SPI1->CR1 |= SPI_CR1_MSTR;
+    SPI1->CR1 |= _VAL2FLD(SPI_CR1_MSTR, 1);
 
     // Write to SPI_CR2 register
     // Turn off SPI1_CR2 to set configurations 
     SPI1->CR2 &= 0b0;
 
     // Configure the DS[3:0] to select data length for transfer
-    SPI1->CR2 |= _VAL2FLD(SPI1_CR2_DS, 0b0111);
+    SPI1->CR2 |= _VAL2FLD(SPI_CR2_DS, 0b0111);
 
     // Configure SSOE
-    SPI1->CR2 |= SPI_CR2_SSOE;
+    SPI1->CR2 |= _VAL2FLD(SPI_CR2_SSOE, 1);
 
     // Configure FRXTH bit (based on DS->DR which is 8-bit)
-    SPI1->CR2 |= SPI_CR2_FRXTH;
+    SPI1->CR2 |= _VAL2FLD(SPI_CR2_FRXTH, 1);
 
     // Enable SPI
-    SPI1->CR1 |= SPI_CR1_SPE;
+    SPI1->CR1 |= _VAL2FLD(SPI_CR1_SPE, 1);
 }
 
 /* Transmits a character (1 byte) over SPI and returns the received character.

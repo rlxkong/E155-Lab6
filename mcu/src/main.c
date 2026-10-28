@@ -5,11 +5,12 @@ Email: jbrake@hmc.edu
 Date: 9/14/19
 */
 
-
+#include "STM32L432KC.h"
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include "main.h"
+#include "DS1722.h"
 
 /////////////////////////////////////////////////////////////////
 // Provided Constants and Functions
@@ -90,7 +91,7 @@ int main(void) {
   gpioEnable(GPIO_PORT_B);
   gpioEnable(GPIO_PORT_C);
 
-  pinMode(:ED_PIN, GPIO_OUTPUT);
+  pinMode(LED_PIN, GPIO_OUTPUT);
   
   RCC->APB2ENR |= (RCC_APB2ENR_TIM15EN);
   initTIM(TIM15);
