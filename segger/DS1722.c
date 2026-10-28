@@ -72,7 +72,7 @@ float readDS1722(void){
 
     // logic to determine positive or negative temperature (due to it being in twos-complement)
     // sets it to negative when the first bit is 1 
-    if(temp_lsb >= 128){
+    if(temp_msb >= 128){
         temp_msb -= 256;
     }
 
